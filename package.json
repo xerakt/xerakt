@@ -1,0 +1,21 @@
+{
+  "name": "xerakt-src",
+  "version": "0.0.0",
+  "private": true,
+  "description": "DOM rendering library",
+  "keywords": [
+    "xerakt"
+  ],
+  "homepage": "https://github.com/xerakt/xerakt#readme",
+  "bugs": {
+    "url": "https://github.com/xerakt/xerakt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xerakt/xerakt.git"
+  },
+  "license": "MPL-2.0",
+  "author": "maronarius",
+  "main": "src/main.ts",
+  "sideEffects": false
+}
