@@ -19,9 +19,9 @@ it provides built-in [hooks](#hooks) for managing the state of your application 
 
 xerakt doesn't require the use of any additional syntax other than JS, but if you want to use JSX with xerakt, you can quite easily configure your project for transpiling JSX into regular JS with external tools;
 
-although the initial idea of xerakt arose independently of any existing JS frameworks, later, after searching for already existing implementations of similar ideas, it was heavily influenced by [React](react.dev), and many concepts (such as [hooks](#hooks), [keys](#keys) and [effects](#useeffect)) are taken from there, so if you already know [React](react.dev), many things will be familiar for you, although there are crucial differences;
+although the initial idea of xerakt arose independently of any existing JS frameworks, later, after searching for already existing implementations of similar ideas, it was heavily influenced by [React](https://react.dev/), and many concepts (such as [hooks](#hooks), [keys](#keys) and [effects](#useeffect-useresulteffect)) are taken from there, so if you already know [React](https://react.dev/), many things will be familiar for you, although there are crucial differences;
 
-nevertheless, xerakt is not a fork of [React](react.dev), and all the code was written from scratch and without mocking the code of [React](react.dev) even when the behavior was intended to be similar;
+nevertheless, xerakt is not a fork of [React](https://react.dev/), and all the code was written from scratch and without mocking the code of [React](https://react.dev/) even when the behavior was intended to be similar;
 
 <br>
 
