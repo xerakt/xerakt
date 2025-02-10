@@ -1,0 +1,22 @@
+{
+	"ignore next line when bunlded": {
+		"scope": "javascript,typescript",
+		"prefix": "@bundle-ignore-line",
+		"body": "@bundle-ignore-line",
+	},
+	"ignore from here up to @bundle-ignore-end when bundled": {
+		"scope": "javascript,typescript",
+		"prefix": "@bundle-ignore-start",
+		"body": "@bundle-ignore-start",
+	},
+	"ignore from @bundle-ignore-start up to here when bundled": {
+		"scope": "javascript,typescript",
+		"prefix": "@bundle-ignore-end",
+		"body": "@bundle-ignore-end",
+	},
+	"uncomment next line or uncomment block comment starting at next line when bundled": {
+		"scope": "javascript,typescript",
+		"prefix": "@bundle-uncomment",
+		"body": "@bundle-uncomment",
+	},
+}
