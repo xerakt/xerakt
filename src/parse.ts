@@ -347,8 +347,6 @@ const reservedTokenPropNames = [
   "tag",
   "props",
   "key",
-  "child",
-  "children",
   "context",
   "contexts",
   "cxt",
