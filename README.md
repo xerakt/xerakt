@@ -1721,7 +1721,9 @@ multipliable token is any other token:
 
 ## license
 
-[.......]
+xerakt is licensed under the [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0/);
+
+[MPL 2.0 FAQ](https://www.mozilla.org/en-US/MPL/2.0/FAQ/);
 
 <br>
 
