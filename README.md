@@ -77,7 +77,7 @@ then you can append that document fragment to the root element of your app:
   <head>
     <script type="module">
 
-      import {xerakt} from "https://unpkg.com/xerakt@0.0.0/esm.js";
+      import {xerakt} from "https://unpkg.com/xerakt@0.1.0-alpha.0/esm.js";
 
       const root = document.getElementById("root");
 
