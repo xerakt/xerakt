@@ -173,6 +173,8 @@ function cleanup<
       );
     };
   };
+
+  this._resultDemander.cleanup();
 };
 
 function init<
