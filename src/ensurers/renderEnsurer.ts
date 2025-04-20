@@ -9,6 +9,7 @@ export {
   type ResultCleanup,
   type Compute,
   type PlugCallback,
+  type DeriveStore,
   useObj as useBadPractice,
   useState,
   useReplaceableState,
@@ -717,12 +718,10 @@ function useStore<
   ActionType,
   InitialType,
 >(
-  derive: (
-    (
-      oldStore: StoreType,
-      action: ActionType,
-    ) => StoreType
-  ),
+  derive: DeriveStore<
+    StoreType,
+    ActionType
+  >,
   initialValue: InitialType,
   getInitialStore: (
     initialValue: InitialType,
@@ -741,12 +740,10 @@ function useStore<
   ActionType,
   InitialType,
 >(
-  derive: (
-    (
-      oldStore: StoreType,
-      action: ActionType,
-    ) => StoreType
-  ),
+  derive: DeriveStore<
+    StoreType,
+    ActionType
+  >,
   initialStore?: StoreType,
 ): readonly [
   store: StoreType,
