@@ -11,6 +11,7 @@ export {
   type ResultCleanup,
   type Compute,
   type PlugCallback,
+  type DeriveStore,
   useBadPractice,
   useState,
   useReplaceableState,
