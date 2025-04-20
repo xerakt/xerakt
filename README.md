@@ -180,9 +180,9 @@ element descriptor token corresponds to a DOM element created by calling `docume
 
 <br>
 
-element descriptor token can have child tokens[^1] (that represent the child nodes of the DOM element represented by that element descriptor token) as value of the `child` or `children` property;
+element descriptor token can have child tokens[^1] (that represent the child nodes of the DOM element represented by that element descriptor token) as a value of its `child` or `children` property;
 
-any token can be used as the child token of an element descriptor token;
+any token can be used as a child token of an element descriptor token;
 
 `child` and `children` property names are synonymous, you can choose either one:
 
@@ -385,7 +385,7 @@ const docFragment = xerakt(
   arrayToken
 );
 
-docFragment.childNodes.length; //0
+docFragment.childNodes.length;//0
 ```
 
 <br>
@@ -400,7 +400,6 @@ textable token corresponds to the contents of a `Text` DOM node (which is automa
 when parsed, textable tokens are [converted to strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#string_coercion);
 
 many contiguous textable tokens (e. g. inside an [array token](#array-token)) are concatenated into a single `Text` DOM node:
-
 
 ```js
 const someNumber = Math.PI * 13.37;
@@ -417,9 +416,12 @@ const docFragment = xerakt(
   ]
 );
 
-docFragment.childNodes.length; //1
-docFragment.childNodes[0].nodeName; //"#text"
+docFragment.childNodes.length;//1
+docFragment.childNodes[0].nodeName;//"#text"
 ```
+
+> [!NOTE]  
+> for optimization reasons, contiguous textable tokens, each of which is an empty string, will correspond to an empty `Text` DOM node (*not* an absence of any) - such behavior is implemented to avoid additional rearrangements of a parent node's child nodes if contents of such textable tokens are calculated dynamically and can sometimes become empty
 
 <br>
 
@@ -566,10 +568,10 @@ const docFragment = xerakt(
   ]
 );
 
-docFragment.childNodes.length; //3
+docFragment.childNodes.length;//3
 ```
 
-\- you can use it if you need your resulting DOM **not** to appear [normalized](https://developer.mozilla.org/en-US/docs/Web/API/Node/normalize)[^2] or/and if another part of your code somehow relies on individual `Text` nodes;
+\- you can use it if another part of your code somehow relies on individual `Text` nodes;
 
 also character data descriptor tokens (but with `tag: "#comment"`) are the appropriate way to make your resulting DOM contain HTML comments:
 
@@ -620,6 +622,32 @@ false && myToken
 
 > [!WARNING]  
 > `true` is **not** a valid token, don't forget your equivalent of `&& myToken` part from the example above
+
+<br>
+
+empty token inserted between textable tokens (otherwise contiguous) prevents them from being concatenated into a single `Text` DOM node:
+
+```js
+const someNumber = Math.PI * 13.37;
+const someBigint = 0x7f8617295f145cc60000n;
+
+const docFragment = xerakt(
+  [
+
+    //textable token that will go to to the first Text node:
+    someNumber,
+
+    //empty token that separates Text nodes:
+    null,
+
+    //textable tokens that will be concatenated to the second Text node:
+    " some text ",
+    someBigint,
+  ]
+);
+
+docFragment.childNodes.length;//2
+```
 
 <br>
 
@@ -683,7 +711,7 @@ xerakt(elementDescriptorToken);
 xerakt does not affect in any way the inserted non-xerakt-generated DOM - the only things it does are checking that it is an instance of `Node` and passing it as an argument to `insertBefore` or `appendChild` (and, if necessary, to `removeChild`) method of the parent node;
 
 > [!WARNING]  
-> xerakt doesn't check what kind of node a foreign node token is, xerakt tries to insert it as child in any case, so it's your responsibility to check that this node can be inserted as a child to the corresponding parent node without any negative outcomes such as unintentional removal from previous parent or, for examle, suddenly losing all its own children in case it is a [document fragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (using a document fragment as a foreign node token is not a good idea in most cases)
+> xerakt doesn't check what kind of node a foreign node token is, xerakt tries to insert it as child in any case, so it's your responsibility to check that this node can be inserted as a child to the corresponding parent node without any negative outcomes such as unintentional removal from previous parent or, for example, suddenly losing all its own children in case it is a [document fragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (using a document fragment as a foreign node token is not a good idea in most cases)
 
 <br>
 
@@ -1182,14 +1210,14 @@ if the value of such property is `true`, then an empty string is passed as the s
 
 top-level token is a token that you pass as an argument to `xerakt` function;
 
-top-level token must always correspond to the same DOM nodes[^3], otherwise an error will be thrown when the corresponding DOM nodes will change;
+top-level token must always correspond to the same DOM nodes[^2], otherwise an error will be thrown when the corresponding DOM nodes will change;
 
 > [!IMPORTANT]  
 > xerakt **can't** immediately check if a token that is passed to it as an argument does always correspond to the same DOM nodes, and this can be figured out at runtime only when it is already too late (an error will be thrown, but that can be much later than calling the `xerakt` function and, possibly, not in all execution scenarios), so it is your responsibility to ensure that a token passed as argument to `xerakt` is a legal top-level token
 
 <br>
 
-to be sure that the corresponding DOM nodes will not change, you should use only [consistent](#consistent-and-non-consistent-tokens) tokens as top-level token - every consistent token always corresponds to the same DOM nodes[^4];
+to be sure that the corresponding DOM nodes will not change, you should use only [consistent](#consistent-and-non-consistent-tokens) tokens as top-level token - every consistent token always corresponds to the same DOM nodes[^3];
 
 > [!NOTE]  
 > there are some non-consistent tokens that *do* always correspond to the same DOM nodes (for example, a [render token](#render-token) that changes its outcome only from `"some text"` to `[["some", " ", "other", " "], () => "text"]` and vice versa - it is [non-consistent (because a collection of a textable token and an array token is not an interconsistent collection)](#consistent-render-token), but in both cases all the text ends up in the same `Text` node, so using such token as an argument for `xerakt` function will not cause an error), but sometimes it can be very difficult to tell if some particular non-consistent token is a legal top-level token, so it is more convenient to use only [consistent](#consistent-and-non-consistent-tokens) tokens as an argument to `xerakt` function
@@ -1256,7 +1284,7 @@ to be sure that the corresponding DOM nodes will not change, you should use only
 >
 >   //MyApp is consistent, so you can pass it as argument to xerakt:
 >   document.body.append(
->     xerakt(MyApp) //should work fine
+>     xerakt(MyApp)//should work fine
 >   );
 >   ```
 >
@@ -1734,8 +1762,6 @@ xerakt is licensed under the [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0/);
 
 [^1]: in fact, each element descriptor token can have only one child, but this child can be an [array token](#array-token) that includes many tokens, so it works like having multiple children
 
-[^2]: even if you are not using any [character data descriptor tokens](#character-data-descriptor-token) with `tag: "#text"` (and aren't using, for expample, [foreign node tokens](#foreign-node-token), `innerHTML` property on [element descriptor token](#element-descriptor-token) or any other way to insert non-xerakt-generated DOM (where could be additional `Text` nodes) into the xerakt-generated one), then the resulting DOM will not necessarily be in a fully [_normalized_ form](https://developer.mozilla.org/en-US/docs/Web/API/Node/normalize), because, for optimization reasons, contiguous [textable tokens](#textable-token), each of which is an empty string, will correspond to an empty `Text` DOM node (*not* an absence of any) - such behavior is implemented to avoid additional rearrangements of a parent node's child nodes if contents of such textable tokens are calculated dynamically and can sometimes become empty; only if (in addition to all the previous constictions) your code doesn't contain any contiguous textable tokens that can become each an empty string the same time, then the resulting DOM will be in a _normalized_ form
+[^2]: shallowly, of course - if the parent node remains the same, its child nodes can be changed without any problem
 
-[^3]: shallowly, of course - if the parent node remains the same, its child nodes can be changed without any problem
-
-[^4]: if it is used in the same place (using it as an argument for `xerakt` function means it is used in only one place, so it is fine)
+[^3]: if it is used in the same place (using it as an argument for `xerakt` function means it is used in only one place, so it is fine)
