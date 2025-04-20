@@ -625,29 +625,36 @@ false && myToken
 
 <br>
 
-empty token inserted between textable tokens (otherwise contiguous) prevents them from being concatenated into a single `Text` DOM node:
-
-```js
-const someNumber = Math.PI * 13.37;
-const someBigint = 0x7f8617295f145cc60000n;
-
-const docFragment = xerakt(
-  [
-
-    //textable token that will go to to the first Text node:
-    someNumber,
-
-    //empty token that separates Text nodes:
-    null,
-
-    //textable tokens that will be concatenated to the second Text node:
-    " some text ",
-    someBigint,
-  ]
-);
-
-docFragment.childNodes.length;//2
-```
+> [!NOTE]  
+> empty token inserted between [textable tokens](#textable-token) (otherwise contiguous) prevents them from being concatenated into a single `Text` DOM node:
+>
+> <details>
+>
+>   <summary>...</summary>
+>
+>   ```js
+>   const someNumber = Math.PI * 13.37;
+>   const someBigint = 0x7f8617295f145cc60000n;
+>
+>   const docFragment = xerakt(
+>     [
+>
+>       //textable token that will go to to the first Text node:
+>       someNumber,
+>
+>       //empty token that separates Text nodes:
+>       null,
+>
+>       //textable tokens that will be concatenated to the second Text node:
+>       " some text ",
+>       someBigint,
+>     ]
+>   );
+>
+>   docFragment.childNodes.length;//2
+>   ```
+>
+> </details>
 
 <br>
 
