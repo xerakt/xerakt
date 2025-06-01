@@ -2050,7 +2050,7 @@ function usePlug<
 
       return obj.callback.call(
         this,
-        deps,
+        obj.deps,
         args
       );
     };
